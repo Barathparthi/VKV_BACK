@@ -8,13 +8,54 @@ const path = require('path');
 require('dotenv').config();
 const mongoose = require('mongoose');
 
+// MongoDB Connection with enhanced stability
+const mongooseOptions = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+  socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+  family: 4, // Use IPv4, skip trying IPv6
+  maxPoolSize: 10, // Maintain up to 10 socket connections
+  minPoolSize: 2, // Maintain at least 2 socket connections
+  retryWrites: true, // Retry failed writes
+  retryReads: true, // Retry failed reads
+};
+
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+  .connect(process.env.MONGO_URI, mongooseOptions)
+  .then(() => {
+    console.log('✅ MongoDB Connected Successfully');
+    console.log(`📍 Database: ${mongoose.connection.db.databaseName}`);
   })
-  .then(() => console.log('✅ MongoDB Connected'))
-  .catch((err) => console.error('❌ MongoDB Connection Error:', err));
+  .catch((err) => {
+    console.error('❌ MongoDB Initial Connection Error:', err.message);
+    // Don't exit process, allow retry
+  });
+
+// Connection event handlers for monitoring
+mongoose.connection.on('connected', () => {
+  console.log('🔗 Mongoose connected to MongoDB');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error('⚠️ Mongoose connection error:', err.message);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('🔌 Mongoose disconnected from MongoDB');
+});
+
+mongoose.connection.on('reconnected', () => {
+  console.log('🔄 Mongoose reconnected to MongoDB');
+});
+
+// Handle application termination
+process.on('SIGINT', () => {
+  mongoose.connection.close(false, () => {
+    console.log('🛑 Mongoose connection closed due to app termination');
+    process.exit(0);
+  });
+});
 
 // const db = require('./config/db');
 const authRoutes = require('@/routes/auth.router');
@@ -100,12 +141,4 @@ app.listen(PORT, () => {
   console.log(`========================================\n`);
 });
 
-// Graceful shutdown
-process.on('SIGINT', () => {
-  console.log('\nShutting down server...');
-  console.log('\nShutting down server...');
-  mongoose.connection.close(false, () => {
-    console.log('MongoDB connection closed');
-    process.exit(0);
-  });
-});
+

@@ -99,15 +99,25 @@ tripSchema.pre('save', function (next) {
         if (!this.base_salary) {
             this.base_salary = (this.distance || 0) * 10; // 10 per km as fallback
         }
-        this.halt_allowance = 0;
+        // Only set halt_allowance to 0 if not already set
+        if (this.halt_allowance === undefined || this.halt_allowance === null) {
+            this.halt_allowance = 0;
+        }
     } else if (this.type === 'halt') {
         this.base_salary = 0;
-        this.halt_allowance = 500; // 500 per halt
+        // Only set halt_allowance to 500 if not already set (allows custom values)
+        if (!this.halt_allowance) {
+            this.halt_allowance = 500; // 500 per halt as default
+        }
     } else {
         this.base_salary = 0;
-        this.halt_allowance = 0;
+        if (this.halt_allowance === undefined || this.halt_allowance === null) {
+            this.halt_allowance = 0;
+        }
     }
 
+    // Calculate total salary including all bonuses
+    // rating_bonus and mileage_bonus are preserved from frontend input
     this.total_salary = this.base_salary + this.halt_allowance + (this.mileage_bonus || 0) + (this.rating_bonus || 0);
     next();
 });
