@@ -10,6 +10,14 @@ const {
   getAttenders,
 } = require('@/controllers/admin.controller');
 
+const {
+  createUser,
+  getAllUsers,
+  updateUser,
+  deleteUser,
+  resetUserPassword
+} = require('@/controllers/userManagement.controller');
+
 // Protect all admin routes
 router.use(protect);
 router.use(authorize('admin'));
@@ -37,5 +45,26 @@ router.get('/drivers', getDrivers);
 // @desc    Get all attenders
 // @route   GET /api/admin/attenders
 router.get('/attenders', getAttenders);
+
+// User Management Routes
+// @desc    Get all users (drivers and attenders)
+// @route   GET /api/admin/user-management
+router.get('/user-management', getAllUsers);
+
+// @desc    Create new user (driver or attender)
+// @route   POST /api/admin/user-management
+router.post('/user-management', createUser);
+
+// @desc    Update user
+// @route   PUT /api/admin/user-management/:id
+router.put('/user-management/:id', updateUser);
+
+// @desc    Delete user
+// @route   DELETE /api/admin/user-management/:id
+router.delete('/user-management/:id', deleteUser);
+
+// @desc    Reset user password
+// @route   PUT /api/admin/user-management/:id/password
+router.put('/user-management/:id/password', resetUserPassword);
 
 module.exports = router;
