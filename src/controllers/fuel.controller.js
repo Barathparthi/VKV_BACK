@@ -11,6 +11,15 @@ exports.addFuelEntry = async (req, res, next) => {
             createdAt: -1,
         });
 
+        // Validate: Check for duplicate or lower odometer reading
+        if (lastEntry && req.body.curr_reading <= lastEntry.curr_reading) {
+            return res.status(400).json({
+                success: false,
+                error: `Duplicate or lower odometer reading detected! The latest reading for this vehicle is ${lastEntry.curr_reading} km. Please enter a reading higher than ${lastEntry.curr_reading} km.`
+            });
+        }
+
+        // Auto-fill previous reading if available
         if (lastEntry) {
             req.body.prev_reading = lastEntry.curr_reading;
         }

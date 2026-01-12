@@ -1,4 +1,4 @@
-// backend/server.js
+// backend/server.js - Force Restart
 // Register module aliases first
 require('module-alias/register');
 

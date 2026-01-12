@@ -11,6 +11,7 @@ const {
   updateRoutePrice,
   updateRoute,
   deleteRoute,
+  addLocation
 } = require('@/controllers/routes.controller');
 
 // Get route price
@@ -21,6 +22,9 @@ router.get('/', protect, getRoutes);
 
 // Get all unique locations (for dropdowns)
 router.get('/locations', protect, getLocations);
+
+// Add new location
+router.post('/locations', protect, addLocation);
 
 // Find route by from and to locations
 router.get('/find/:from/:to', protect, findRoute);
