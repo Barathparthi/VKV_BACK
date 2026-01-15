@@ -25,11 +25,12 @@ exports.getRoutePrice = async (req, res) => {
 // Get all routes with prices
 exports.getRoutes = async (req, res) => {
     try {
-        const routes = await RouteModel.aggregate([
-            { $match: { is_active: true } },
+        console.log('📍 Fetching all routes from Route-price collection...');
+        // Fetch from Route-price collection as primary source
+        const routes = await RoutePrice.aggregate([
             {
                 $lookup: {
-                    from: 'Route-price',
+                    from: 'routes',
                     let: { from: '$from_location', to: '$to_location' },
                     pipeline: [
                         {
@@ -43,25 +44,27 @@ exports.getRoutes = async (req, res) => {
                             }
                         }
                     ],
-                    as: 'priceInfo'
+                    as: 'routeInfo'
                 }
             },
             {
                 $unwind: {
-                    path: '$priceInfo',
+                    path: '$routeInfo',
                     preserveNullAndEmptyArrays: true
                 }
             },
             {
                 $project: {
-                    _id: 1,
-                    from_location: 1,
-                    to_location: 1,
-                    distance: 1,
-                    is_active: 1,
-                    driver_bata_single: { $ifNull: ['$priceInfo.driver_bata_single', 0] },
-                    driver_bata_double: { $ifNull: ['$priceInfo.driver_bata_double', 0] },
-                    cleaner_bata: { $ifNull: ['$priceInfo.cleaner_bata', 0] }
+                    _id: { $ifNull: ['$routeInfo._id', '$_id'] },
+                    from_location: '$from_location',
+                    to_location: '$to_location',
+                    distance: { $ifNull: ['$routeInfo.distance', 0] },
+                    is_active: { $ifNull: ['$routeInfo.is_active', true] },
+                    driver_bata_single: '$driver_bata_single',
+                    driver_bata_double: '$driver_bata_double',
+                    cleaner_bata: '$cleaner_bata',
+                    created_at: { $ifNull: ['$routeInfo.created_at', new Date()] },
+                    updated_at: { $ifNull: ['$routeInfo.updated_at', new Date()] }
                 }
             },
             { $sort: { from_location: 1, to_location: 1 } }
@@ -130,22 +133,48 @@ exports.getRoute = async (req, res) => {
 // Find route by from and to locations
 exports.findRoute = async (req, res) => {
     try {
+        const { from, to } = req.params;
+
+        // Check Routes collection (Case Insensitive)
         const route = await RouteModel.findOne({
-            from_location: req.params.from,
-            to_location: req.params.to,
-            is_active: true,
+            from_location: { $regex: new RegExp(`^${from}$`, 'i') },
+            to_location: { $regex: new RegExp(`^${to}$`, 'i') },
         });
 
-        if (!route) {
-            return res.status(404).json({ message: 'Route not found' });
+        if (route) {
+            return res.json({
+                exists: true,
+                source: 'routes',
+                isActive: route.is_active,
+                route: route
+            });
         }
 
-        res.json(route);
+        // Check RoutePrice collection (Case Insensitive)
+        const price = await RoutePrice.findOne({
+            from_location: { $regex: new RegExp(`^${from}$`, 'i') },
+            to_location: { $regex: new RegExp(`^${to}$`, 'i') },
+        });
+
+        if (price) {
+            return res.json({
+                exists: true,
+                source: 'price',
+                isActive: true, // Treated as active for display
+                route: price
+            });
+        }
+
+        return res.status(404).json({
+            exists: false,
+            message: 'Route not found'
+        });
     } catch (error) {
         console.error('Error finding route:', error);
         res.status(500).json({ message: 'Error finding route', error: error.message });
     }
 };
+
 
 // Create new route (admin only)
 exports.createRoute = async (req, res) => {
@@ -169,9 +198,10 @@ exports.createRoute = async (req, res) => {
             });
         }
 
+        // Check for existing route (case-insensitive) in Routes collection
         const existingRoute = await RouteModel.findOne({
-            from_location,
-            to_location,
+            from_location: { $regex: new RegExp(`^${from_location}$`, 'i') },
+            to_location: { $regex: new RegExp(`^${to_location}$`, 'i') },
         });
 
         let route;
@@ -179,7 +209,7 @@ exports.createRoute = async (req, res) => {
         if (existingRoute) {
             if (existingRoute.is_active) {
                 return res.status(400).json({
-                    message: 'Route already exists from this location to destination',
+                    message: `Route already exists: ${existingRoute.from_location} to ${existingRoute.to_location}`,
                 });
             } else {
                 // Reactivate route
@@ -189,6 +219,22 @@ exports.createRoute = async (req, res) => {
                 route = existingRoute;
             }
         } else {
+            // Check RoutePrice (case-insensitive) for ghost routes to avoid duplicates
+            const existingPrice = await RoutePrice.findOne({
+                from_location: { $regex: new RegExp(`^${from_location}$`, 'i') },
+                to_location: { $regex: new RegExp(`^${to_location}$`, 'i') },
+            });
+
+            if (existingPrice) {
+                // If casing matches exactly, we allow it (syncing logic).
+                // If casing differs, we block to prevent duplicates.
+                if (existingPrice.from_location !== from_location || existingPrice.to_location !== to_location) {
+                    return res.status(400).json({
+                        message: `Route already exists in price list as: ${existingPrice.from_location} -> ${existingPrice.to_location}`,
+                    });
+                }
+            }
+
             route = new RouteModel({
                 from_location,
                 to_location,
@@ -263,9 +309,24 @@ exports.updateRoute = async (req, res) => {
             cleaner_bata
         } = req.body;
 
-        const route = await RouteModel.findById(req.params.id);
+        let route = await RouteModel.findById(req.params.id);
+
         if (!route) {
-            return res.status(404).json({ message: 'Route not found' });
+            // Check if it's a ghost route (ID in RoutePrice but not in Routes)
+            const ghostPrice = await RoutePrice.findById(req.params.id);
+            if (ghostPrice) {
+                // Sync: Create a new Route document using the existing Price ID
+                route = new RouteModel({
+                    _id: req.params.id, // Preserve the ID so frontend stays in sync
+                    from_location: ghostPrice.from_location,
+                    to_location: ghostPrice.to_location,
+                    distance: 0,
+                    is_active: true
+                });
+                // Note: We don't save yet; subsequent logic will apply updates and save.
+            } else {
+                return res.status(404).json({ message: 'Route not found' });
+            }
         }
 
         // Store original locations to find the price record
@@ -289,15 +350,20 @@ exports.updateRoute = async (req, res) => {
         const finalFrom = from_location !== undefined ? from_location : originalFrom;
         const finalTo = to_location !== undefined ? to_location : originalTo;
 
-        await RoutePrice.findOneAndUpdate(
-            { from_location: finalFrom, to_location: finalTo },
-            {
-                driver_bata_single: driver_bata_single !== undefined ? driver_bata_single : undefined,
-                driver_bata_double: driver_bata_double !== undefined ? driver_bata_double : undefined,
-                cleaner_bata: cleaner_bata !== undefined ? cleaner_bata : undefined
-            },
-            { upsert: true, new: true, textRegex: undefined } // textRegex to avoid potential issues if any
-        );
+        // Build update object with only defined values
+        const priceUpdate = {};
+        if (driver_bata_single !== undefined) priceUpdate.driver_bata_single = driver_bata_single;
+        if (driver_bata_double !== undefined) priceUpdate.driver_bata_double = driver_bata_double;
+        if (cleaner_bata !== undefined) priceUpdate.cleaner_bata = cleaner_bata;
+
+        // Only update if there are price fields to update
+        if (Object.keys(priceUpdate).length > 0) {
+            await RoutePrice.findOneAndUpdate(
+                { from_location: finalFrom, to_location: finalTo },
+                priceUpdate,
+                { upsert: true, new: true }
+            );
+        }
 
         res.json(route);
     } catch (error) {
@@ -313,9 +379,33 @@ exports.deleteRoute = async (req, res) => {
             return res.status(403).json({ message: 'Access denied. Admin only.' });
         }
 
-        const route = await RouteModel.findById(req.params.id);
+        let route = await RouteModel.findById(req.params.id);
         if (!route) {
-            return res.status(404).json({ message: 'Route not found' });
+            // Check if ghost route
+            const ghost = await RoutePrice.findById(req.params.id);
+            if (ghost) {
+                try {
+                    route = new RouteModel({
+                        _id: req.params.id,
+                        from_location: ghost.from_location,
+                        to_location: ghost.to_location,
+                        is_active: false // Create as inactive immediately
+                    });
+                    await route.save();
+                    return res.json({ message: 'Route deleted successfully' });
+                } catch (err) {
+                    // If creating the route fails due to duplicate key (E11000), 
+                    // it means another active route exists with these details.
+                    // In this case, we hard-delete the ghost price record to remove the duplicate.
+                    if (err.code === 11000) {
+                        await RoutePrice.findByIdAndDelete(req.params.id);
+                        return res.json({ message: 'Duplicate route record removed permanently' });
+                    }
+                    throw err;
+                }
+            } else {
+                return res.status(404).json({ message: 'Route not found' });
+            }
         }
 
         route.is_active = false;

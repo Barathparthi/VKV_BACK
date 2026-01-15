@@ -1,0 +1,465 @@
+{
+  "exportDate": "2026-01-14T16:26:47.190Z",
+  "totalRoutes": 51,
+  "routes": [
+    {
+      "_id": "692fba86e2099fee71a34a90",
+      "no": 24,
+      "from_location": "Bangalore",
+      "to_location": "Chennai",
+      "driver_bata_double": 800,
+      "driver_bata_single": 1400,
+      "cleaner_bata": 600
+    },
+    {
+      "_id": "692fba86e2099fee71a34a95",
+      "no": 29,
+      "from_location": "Bangalore",
+      "to_location": "Rameshwaram",
+      "driver_bata_double": 1400,
+      "driver_bata_single": 2000,
+      "cleaner_bata": 700
+    },
+    {
+      "_id": "692fba86e2099fee71a34a93",
+      "no": 27,
+      "from_location": "Bangalore",
+      "to_location": "Varkala",
+      "driver_bata_double": 1575,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 800
+    },
+    {
+      "_id": "692fba86e2099fee71a34a8f",
+      "no": 23,
+      "from_location": "Chennai",
+      "to_location": "Bangalore",
+      "driver_bata_double": 800,
+      "driver_bata_single": 1400,
+      "cleaner_bata": 600
+    },
+    {
+      "_id": "692fba86e2099fee71a34a83",
+      "no": 11,
+      "from_location": "Chennai",
+      "to_location": "Ernakulam",
+      "driver_bata_double": 1360,
+      "driver_bata_single": 2550,
+      "cleaner_bata": 700
+    },
+    {
+      "_id": "692fba86e2099fee71a34a89",
+      "no": 17,
+      "from_location": "Chennai",
+      "to_location": "Goa",
+      "driver_bata_double": 1950,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 800
+    },
+    {
+      "_id": "692fba86e2099fee71a34a8d",
+      "no": 21,
+      "from_location": "Chennai",
+      "to_location": "Hyderabad",
+      "driver_bata_double": 1400,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 700
+    },
+    {
+      "_id": "692fba86e2099fee71a34a85",
+      "no": 13,
+      "from_location": "Chennai",
+      "to_location": "Kannur",
+      "driver_bata_double": 1630,
+      "driver_bata_single": 2550,
+      "cleaner_bata": 800
+    },
+    {
+      "_id": "692fba86e2099fee71a34a79",
+      "no": 1,
+      "from_location": "Chennai",
+      "to_location": "Karungal",
+      "driver_bata_double": 1400,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 750
+    },
+    {
+      "_id": "692fba86e2099fee71a34a81",
+      "no": 9,
+      "from_location": "Chennai",
+      "to_location": "Marudhamalai",
+      "driver_bata_double": 1200,
+      "driver_bata_single": 2100,
+      "cleaner_bata": 700
+    },
+    {
+      "_id": "692fba86e2099fee71a34a87",
+      "no": 15,
+      "from_location": "Chennai",
+      "to_location": "Munnar",
+      "driver_bata_double": 1360,
+      "driver_bata_single": 2550,
+      "cleaner_bata": 700
+    },
+    {
+      "_id": "692fba86e2099fee71a34a7b",
+      "no": 3,
+      "from_location": "Chennai",
+      "to_location": "Nagercoil",
+      "driver_bata_double": 1400,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 930
+    },
+    {
+      "_id": "692fba86e2099fee71a34a9b",
+      "no": 35,
+      "from_location": "Chennai",
+      "to_location": "Paramakudi",
+      "driver_bata_double": 1130,
+      "driver_bata_single": 2100,
+      "cleaner_bata": 650
+    },
+    {
+      "_id": "692fba86e2099fee71a34a7f",
+      "no": 7,
+      "from_location": "Chennai",
+      "to_location": "Thiruchendur",
+      "driver_bata_double": 1390,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 700
+    },
+    {
+      "_id": "692fba86e2099fee71a34a99",
+      "no": 33,
+      "from_location": "Chennai",
+      "to_location": "Vadipatti",
+      "driver_bata_double": 1130,
+      "driver_bata_single": 2100,
+      "cleaner_bata": 650
+    },
+    {
+      "_id": "692fba86e2099fee71a34a8b",
+      "no": 19,
+      "from_location": "Chennai",
+      "to_location": "Varanasi",
+      "driver_bata_double": 2000,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 900
+    },
+    {
+      "_id": "692fba86e2099fee71a34a91",
+      "no": 25,
+      "from_location": "Chennai",
+      "to_location": "Varkala",
+      "driver_bata_double": 1575,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 800
+    },
+    {
+      "_id": "692fba86e2099fee71a34a97",
+      "no": 31,
+      "from_location": "Chennai",
+      "to_location": "Vellayapuram",
+      "driver_bata_double": 1130,
+      "driver_bata_single": 2000,
+      "cleaner_bata": 700
+    },
+    {
+      "_id": "692fba86e2099fee71a34a7d",
+      "no": 5,
+      "from_location": "Chennai",
+      "to_location": "Vijayawada",
+      "driver_bata_double": 2100,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 930
+    },
+    {
+      "_id": "692fba86e2099fee71a34a9d",
+      "no": 37,
+      "from_location": "Chennai",
+      "to_location": "Visakhapatnam",
+      "driver_bata_double": 1750,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 800
+    },
+    {
+      "_id": "69662d1d3fb3c4cc8777db9a",
+      "to_location": "ernakulam",
+      "from_location": "Chennai",
+      "__v": 0,
+      "cleaner_bata": 750,
+      "driver_bata_double": 1480,
+      "driver_bata_single": 0
+    },
+    {
+      "_id": "696630613fb3c4cc8777dba2",
+      "to_location": "goa",
+      "from_location": "Chennai",
+      "__v": 0,
+      "cleaner_bata": 900,
+      "driver_bata_double": 1950,
+      "driver_bata_single": 0
+    },
+    {
+      "_id": "696630b23fb3c4cc8777dba4",
+      "from_location": "Chennai",
+      "to_location": "kannur",
+      "__v": 0,
+      "cleaner_bata": 800,
+      "driver_bata_double": 1630,
+      "driver_bata_single": 0
+    },
+    {
+      "_id": "69662e083fb3c4cc8777dba0",
+      "to_location": "marudhamalai",
+      "from_location": "Chennai",
+      "__v": 0,
+      "cleaner_bata": 750,
+      "driver_bata_double": 2100,
+      "driver_bata_single": 1200
+    },
+    {
+      "_id": "69662da23fb3c4cc8777db9e",
+      "from_location": "Chennai",
+      "to_location": "munnar",
+      "__v": 0,
+      "cleaner_bata": 700,
+      "driver_bata_double": 1390,
+      "driver_bata_single": 0
+    },
+    {
+      "_id": "69662d5a3fb3c4cc8777db9c",
+      "to_location": "thiruchendur",
+      "from_location": "Chennai",
+      "__v": 0,
+      "cleaner_bata": 700,
+      "driver_bata_double": 2450,
+      "driver_bata_single": 1360
+    },
+    {
+      "_id": "69662a9c3fb3c4cc8777db95",
+      "to_location": "vellayapuram",
+      "from_location": "Chennai",
+      "__v": 0,
+      "cleaner_bata": 750,
+      "driver_bata_double": 1130,
+      "driver_bata_single": 2100
+    },
+    {
+      "_id": "692fba86e2099fee71a34a84",
+      "no": 12,
+      "from_location": "Ernakulam",
+      "to_location": "Chennai",
+      "driver_bata_double": 1360,
+      "driver_bata_single": 2550,
+      "cleaner_bata": 700
+    },
+    {
+      "_id": "692fba86e2099fee71a34a8a",
+      "no": 18,
+      "from_location": "Goa",
+      "to_location": "Chennai",
+      "driver_bata_double": 1950,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 800
+    },
+    {
+      "_id": "692fba86e2099fee71a34a8e",
+      "no": 22,
+      "from_location": "Hyderabad",
+      "to_location": "Chennai",
+      "driver_bata_double": 1400,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 700
+    },
+    {
+      "_id": "692fba86e2099fee71a34a86",
+      "no": 14,
+      "from_location": "Kannur",
+      "to_location": "Chennai",
+      "driver_bata_double": 1630,
+      "driver_bata_single": 2550,
+      "cleaner_bata": 800
+    },
+    {
+      "_id": "692fba86e2099fee71a34a7a",
+      "no": 2,
+      "from_location": "Karungal",
+      "to_location": "Chennai",
+      "driver_bata_double": 1400,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 750
+    },
+    {
+      "_id": "692fba86e2099fee71a34a82",
+      "no": 10,
+      "from_location": "Marudhamalai",
+      "to_location": "Chennai",
+      "driver_bata_double": 1200,
+      "driver_bata_single": 2100,
+      "cleaner_bata": 700
+    },
+    {
+      "_id": "692fba86e2099fee71a34a88",
+      "no": 16,
+      "from_location": "Munnar",
+      "to_location": "Chennai",
+      "driver_bata_double": 1360,
+      "driver_bata_single": 2550,
+      "cleaner_bata": 700
+    },
+    {
+      "_id": "692fba86e2099fee71a34a7c",
+      "no": 4,
+      "from_location": "Nagercoil",
+      "to_location": "Chennai",
+      "driver_bata_double": 1400,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 930
+    },
+    {
+      "_id": "692fba86e2099fee71a34a9c",
+      "no": 36,
+      "from_location": "Paramakudi",
+      "to_location": "Chennai",
+      "driver_bata_double": 1130,
+      "driver_bata_single": 2100,
+      "cleaner_bata": 650
+    },
+    {
+      "_id": "692fba86e2099fee71a34a96",
+      "no": 30,
+      "from_location": "Rameshwaram",
+      "to_location": "Bangalore",
+      "driver_bata_double": 1400,
+      "driver_bata_single": 2000,
+      "cleaner_bata": 700
+    },
+    {
+      "_id": "692fba86e2099fee71a34a80",
+      "no": 8,
+      "from_location": "Thiruchendur",
+      "to_location": "Chennai",
+      "driver_bata_double": 1390,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 700
+    },
+    {
+      "_id": "692fba86e2099fee71a34a9a",
+      "no": 34,
+      "from_location": "Vadipatti",
+      "to_location": "Chennai",
+      "driver_bata_double": 1130,
+      "driver_bata_single": 2100,
+      "cleaner_bata": 650
+    },
+    {
+      "_id": "692fba86e2099fee71a34a8c",
+      "no": 20,
+      "from_location": "Varanasi",
+      "to_location": "Chennai",
+      "driver_bata_double": 2000,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 900
+    },
+    {
+      "_id": "692fba86e2099fee71a34a94",
+      "no": 28,
+      "from_location": "Varkala",
+      "to_location": "Bangalore",
+      "driver_bata_double": 1575,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 800
+    },
+    {
+      "_id": "692fba86e2099fee71a34a92",
+      "no": 26,
+      "from_location": "Varkala",
+      "to_location": "Chennai",
+      "driver_bata_double": 1575,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 800
+    },
+    {
+      "_id": "692fba86e2099fee71a34a98",
+      "no": 32,
+      "from_location": "Vellayapuram",
+      "to_location": "Chennai",
+      "driver_bata_double": 1130,
+      "driver_bata_single": 2000,
+      "cleaner_bata": 700
+    },
+    {
+      "_id": "692fba86e2099fee71a34a7e",
+      "no": 6,
+      "from_location": "Vijayawada",
+      "to_location": "Chennai",
+      "driver_bata_double": 2100,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 930
+    },
+    {
+      "_id": "692fba86e2099fee71a34a9e",
+      "no": 38,
+      "from_location": "Visakhapatnam",
+      "to_location": "Chennai",
+      "driver_bata_double": 1750,
+      "driver_bata_single": 2600,
+      "cleaner_bata": 800
+    },
+    {
+      "_id": "69662d353fb3c4cc8777db9b",
+      "from_location": "ernakulam",
+      "to_location": "Chennai",
+      "__v": 0,
+      "cleaner_bata": 750,
+      "driver_bata_double": 1480,
+      "driver_bata_single": 0
+    },
+    {
+      "_id": "6966308f3fb3c4cc8777dba3",
+      "to_location": "Chennai",
+      "from_location": "goa",
+      "__v": 0,
+      "cleaner_bata": 900,
+      "driver_bata_double": 1950,
+      "driver_bata_single": 0
+    },
+    {
+      "_id": "696631023fb3c4cc8777dba5",
+      "to_location": "Chennai",
+      "from_location": "kannur",
+      "__v": 0,
+      "cleaner_bata": 800,
+      "driver_bata_double": 1630,
+      "driver_bata_single": 0
+    },
+    {
+      "_id": "69662dc93fb3c4cc8777db9f",
+      "to_location": "Chennai",
+      "from_location": "munnar",
+      "__v": 0,
+      "cleaner_bata": 700,
+      "driver_bata_double": 1390,
+      "driver_bata_single": 0
+    },
+    {
+      "_id": "69662d7b3fb3c4cc8777db9d",
+      "from_location": "thiruchendur",
+      "to_location": "Chennai",
+      "__v": 0,
+      "cleaner_bata": 700,
+      "driver_bata_double": 2450,
+      "driver_bata_single": 1360
+    },
+    {
+      "_id": "69662c673fb3c4cc8777db99",
+      "to_location": "Chennai",
+      "from_location": "vellayapuram",
+      "__v": 0,
+      "cleaner_bata": 750,
+      "driver_bata_double": 1130,
+      "driver_bata_single": 2100
+    }
+  ]
+}

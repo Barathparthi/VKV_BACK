@@ -133,7 +133,7 @@ app.use((req, res) => {
 // Start server
 app.listen(PORT, () => {
   console.log(`\n========================================`);
-  console.log(`🚀 VKV Travels API Server`);
+  console.log(`🚀 VKV Travels API Server - Started at ${new Date().toLocaleTimeString()}`);
   console.log(`========================================`);
   console.log(`📡 Server running on port ${PORT}`);
   console.log(`🌐 API URL: http://localhost:${PORT}`);
