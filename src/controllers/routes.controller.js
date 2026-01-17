@@ -6,14 +6,26 @@ const Location = require('@/models/Location');
 exports.getRoutePrice = async (req, res) => {
     try {
         const { from, to } = req.params;
+        console.log(`📍 Looking for route price: ${from} → ${to}`);
+
+        // Case-insensitive search
         const price = await RoutePrice.findOne({
-            from_location: from,
-            to_location: to,
+            from_location: { $regex: new RegExp(`^${from}$`, 'i') },
+            to_location: { $regex: new RegExp(`^${to}$`, 'i') },
         });
 
         if (!price) {
+            console.log(`❌ Price not found for route: ${from} → ${to}`);
             return res.status(404).json({ message: 'Price not found for this route' });
         }
+
+        console.log(`✅ Price found:`, {
+            from: price.from_location,
+            to: price.to_location,
+            driver_bata_single: price.driver_bata_single,
+            driver_bata_double: price.driver_bata_double,
+            cleaner_bata: price.cleaner_bata
+        });
 
         res.json(price);
     } catch (error) {
