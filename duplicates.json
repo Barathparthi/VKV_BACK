@@ -1,0 +1,262 @@
+[
+  [
+    {
+      "id": "692fba86e2099fee71a34a97",
+      "from": "Chennai",
+      "to": "Vellayapuram",
+      "single": 2000,
+      "double": 1130,
+      "cleaner": 700,
+      "createdAt": "N/A"
+    },
+    {
+      "id": "69662a9c3fb3c4cc8777db95",
+      "from": "Chennai",
+      "to": "vellayapuram",
+      "single": 2100,
+      "double": 1130,
+      "cleaner": 750,
+      "createdAt": "N/A"
+    }
+  ],
+  [
+    {
+      "id": "692fba86e2099fee71a34a98",
+      "from": "Vellayapuram",
+      "to": "Chennai",
+      "single": 2000,
+      "double": 1130,
+      "cleaner": 700,
+      "createdAt": "N/A"
+    },
+    {
+      "id": "69662c673fb3c4cc8777db99",
+      "from": "vellayapuram",
+      "to": "Chennai",
+      "single": 2100,
+      "double": 1130,
+      "cleaner": 750,
+      "createdAt": "N/A"
+    }
+  ],
+  [
+    {
+      "id": "692fba86e2099fee71a34a84",
+      "from": "Ernakulam",
+      "to": "Chennai",
+      "single": 2550,
+      "double": 1360,
+      "cleaner": 700,
+      "createdAt": "N/A"
+    },
+    {
+      "id": "69662d353fb3c4cc8777db9b",
+      "from": "ernakulam",
+      "to": "Chennai",
+      "single": 0,
+      "double": 1480,
+      "cleaner": 750,
+      "createdAt": "N/A"
+    }
+  ],
+  [
+    {
+      "id": "692fba86e2099fee71a34a7f",
+      "from": "Chennai",
+      "to": "Thiruchendur",
+      "single": 2450,
+      "double": 1360,
+      "cleaner": 700,
+      "createdAt": "N/A"
+    },
+    {
+      "id": "69662d5a3fb3c4cc8777db9c",
+      "from": "Chennai",
+      "to": "thiruchendur",
+      "single": 1360,
+      "double": 2450,
+      "cleaner": 700,
+      "createdAt": "N/A"
+    }
+  ],
+  [
+    {
+      "id": "692fba86e2099fee71a34a80",
+      "from": "Thiruchendur",
+      "to": "Chennai",
+      "single": 2450,
+      "double": 1360,
+      "cleaner": 700,
+      "createdAt": "N/A"
+    },
+    {
+      "id": "69662d7b3fb3c4cc8777db9d",
+      "from": "thiruchendur",
+      "to": "Chennai",
+      "single": 1360,
+      "double": 2450,
+      "cleaner": 700,
+      "createdAt": "N/A"
+    }
+  ],
+  [
+    {
+      "id": "692fba86e2099fee71a34a87",
+      "from": "Chennai",
+      "to": "Munnar",
+      "single": 2550,
+      "double": 1360,
+      "cleaner": 700,
+      "createdAt": "N/A"
+    },
+    {
+      "id": "69662da23fb3c4cc8777db9e",
+      "from": "Chennai",
+      "to": "munnar",
+      "single": 2500,
+      "double": 1390,
+      "cleaner": 700,
+      "createdAt": "N/A"
+    }
+  ],
+  [
+    {
+      "id": "692fba86e2099fee71a34a88",
+      "from": "Munnar",
+      "to": "Chennai",
+      "single": 2550,
+      "double": 1360,
+      "cleaner": 700,
+      "createdAt": "N/A"
+    },
+    {
+      "id": "69662dc93fb3c4cc8777db9f",
+      "from": "munnar",
+      "to": "Chennai",
+      "single": 0,
+      "double": 1390,
+      "cleaner": 700,
+      "createdAt": "N/A"
+    }
+  ],
+  [
+    {
+      "id": "692fba86e2099fee71a34a81",
+      "from": "Chennai",
+      "to": "Marudhamalai",
+      "single": 2100,
+      "double": 1200,
+      "cleaner": 750,
+      "createdAt": "N/A"
+    },
+    {
+      "id": "69662e083fb3c4cc8777dba0",
+      "from": "Chennai",
+      "to": "marudhamalai",
+      "single": 1200,
+      "double": 2100,
+      "cleaner": 750,
+      "createdAt": "N/A"
+    }
+  ],
+  [
+    {
+      "id": "692fba86e2099fee71a34a89",
+      "from": "Chennai",
+      "to": "Goa",
+      "single": 2600,
+      "double": 1950,
+      "cleaner": 800,
+      "createdAt": "N/A"
+    },
+    {
+      "id": "696630613fb3c4cc8777dba2",
+      "from": "Chennai",
+      "to": "goa",
+      "single": 0,
+      "double": 1950,
+      "cleaner": 900,
+      "createdAt": "N/A"
+    }
+  ],
+  [
+    {
+      "id": "692fba86e2099fee71a34a8a",
+      "from": "Goa",
+      "to": "Chennai",
+      "single": 2600,
+      "double": 1950,
+      "cleaner": 800,
+      "createdAt": "N/A"
+    },
+    {
+      "id": "6966308f3fb3c4cc8777dba3",
+      "from": "goa",
+      "to": "Chennai",
+      "single": 0,
+      "double": 1950,
+      "cleaner": 900,
+      "createdAt": "N/A"
+    }
+  ],
+  [
+    {
+      "id": "692fba86e2099fee71a34a85",
+      "from": "Chennai",
+      "to": "Kannur",
+      "single": 2550,
+      "double": 1630,
+      "cleaner": 800,
+      "createdAt": "N/A"
+    },
+    {
+      "id": "696630b23fb3c4cc8777dba4",
+      "from": "Chennai",
+      "to": "kannur",
+      "single": 0,
+      "double": 1630,
+      "cleaner": 800,
+      "createdAt": "N/A"
+    }
+  ],
+  [
+    {
+      "id": "692fba86e2099fee71a34a86",
+      "from": "Kannur",
+      "to": "Chennai",
+      "single": 2550,
+      "double": 1630,
+      "cleaner": 800,
+      "createdAt": "N/A"
+    },
+    {
+      "id": "696631023fb3c4cc8777dba5",
+      "from": "kannur",
+      "to": "Chennai",
+      "single": 0,
+      "double": 1630,
+      "cleaner": 800,
+      "createdAt": "N/A"
+    }
+  ],
+  [
+    {
+      "id": "692fba86e2099fee71a34a96",
+      "from": "Rameshwaram",
+      "to": "Bangalore",
+      "single": 2500,
+      "double": 1390,
+      "cleaner": 700,
+      "createdAt": "N/A"
+    },
+    {
+      "id": "6967d4a290666a34f9f5e962",
+      "from": "rameshwaram",
+      "to": "bangalore",
+      "single": 2500,
+      "double": 1390,
+      "cleaner": 700,
+      "createdAt": "N/A"
+    }
+  ]
+]

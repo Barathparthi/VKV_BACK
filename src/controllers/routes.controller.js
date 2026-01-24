@@ -287,15 +287,56 @@ exports.updateRoutePrice = async (req, res) => {
             return res.status(400).json({ message: 'Missing from_location or to_location' });
         }
 
-        const price = await RoutePrice.findOneAndUpdate(
-            { from_location, to_location },
-            {
-                driver_bata_single: driver_bata_single || 0,
-                driver_bata_double: driver_bata_double || 0,
-                cleaner_bata: cleaner_bata || 0,
-            },
-            { new: true, upsert: true },
-        );
+        // Find ALL existing prices case-insensitively to handle duplicates
+        const existingPrices = await RoutePrice.find({
+            from_location: { $regex: new RegExp(`^${from_location}$`, 'i') },
+            to_location: { $regex: new RegExp(`^${to_location}$`, 'i') }
+        });
+
+        const updateData = {
+            driver_bata_single: driver_bata_single || 0,
+            driver_bata_double: driver_bata_double || 0,
+            cleaner_bata: cleaner_bata || 0,
+        };
+
+        let price;
+
+        if (existingPrices.length > 0) {
+            // If multiple duplicates exist, keep the first one and delete the rest
+            const keepPrice = existingPrices[0];
+
+            if (existingPrices.length > 1) {
+                console.log(`⚠️ Found ${existingPrices.length} duplicates for ${from_location} → ${to_location}. Merging...`);
+
+                // Delete all duplicates except the first one
+                for (let i = 1; i < existingPrices.length; i++) {
+                    await RoutePrice.findByIdAndDelete(existingPrices[i]._id);
+                    console.log(`   Deleted duplicate: ${existingPrices[i]._id}`);
+                }
+            }
+
+            // Update the kept record with new prices AND standardized location names
+            price = await RoutePrice.findByIdAndUpdate(
+                keepPrice._id,
+                {
+                    ...updateData,
+                    from_location,  // Standardize the casing
+                    to_location     // Standardize the casing
+                },
+                { new: true }
+            );
+
+            console.log(`✅ Updated route price: ${from_location} → ${to_location}`);
+        } else {
+            // Create new record
+            price = await RoutePrice.create({
+                from_location,
+                to_location,
+                ...updateData
+            });
+
+            console.log(`✅ Created new route price: ${from_location} → ${to_location}`);
+        }
 
         res.json(price);
     } catch (error) {
@@ -303,6 +344,7 @@ exports.updateRoutePrice = async (req, res) => {
         res.status(500).json({ message: 'Error updating route price', error: error.message });
     }
 };
+
 
 // Update route (admin only)
 exports.updateRoute = async (req, res) => {
@@ -368,13 +410,62 @@ exports.updateRoute = async (req, res) => {
         if (driver_bata_double !== undefined) priceUpdate.driver_bata_double = driver_bata_double;
         if (cleaner_bata !== undefined) priceUpdate.cleaner_bata = cleaner_bata;
 
-        // Only update if there are price fields to update
-        if (Object.keys(priceUpdate).length > 0) {
-            await RoutePrice.findOneAndUpdate(
-                { from_location: finalFrom, to_location: finalTo },
-                priceUpdate,
-                { upsert: true, new: true }
-            );
+        // Only update if there are price fields to update OR if locations changed
+        // We ALWAYS check for price sync if we touched the route
+        const shouldSyncPrice = Object.keys(priceUpdate).length > 0 || from_location !== undefined || to_location !== undefined;
+
+        if (shouldSyncPrice) {
+            // Find existing price case-insensitively using the ORIGINAL or NEW names (to catch either)
+            // Ideally we search by the *current* DB state, but we only have new or original.
+            // Search using the ORIGINAL names to find the record that needs updating
+            const originalPrice = await RoutePrice.findOne({
+                from_location: { $regex: new RegExp(`^${originalFrom}$`, 'i') },
+                to_location: { $regex: new RegExp(`^${originalTo}$`, 'i') }
+            });
+
+            const updatePayload = {
+                ...priceUpdate,
+                from_location: finalFrom,
+                to_location: finalTo
+            };
+
+            if (originalPrice) {
+                try {
+                    await RoutePrice.findByIdAndUpdate(originalPrice._id, updatePayload, { new: true });
+                } catch (err) {
+                    if (err.code === 11000) {
+                        // Target route already exists (duplicate key error)
+                        // This happens if we try to rename 'ernakulam' to 'Ernakulam' but 'Ernakulam' already exists
+                        // Strategy: Delete the old record (originalPrice) and update the existing target record
+                        console.log('Merging duplicate RoutePrice records...');
+                        await RoutePrice.findByIdAndDelete(originalPrice._id);
+
+                        // Update the target record with new prices
+                        await RoutePrice.findOneAndUpdate(
+                            { from_location: finalFrom, to_location: finalTo },
+                            priceUpdate,
+                            { new: true }
+                        );
+                    } else {
+                        throw err;
+                    }
+                }
+            } else {
+                try {
+                    await RoutePrice.create(updatePayload);
+                } catch (err) {
+                    // Check if it failed because it exists (race condition)
+                    if (err.code === 11000) {
+                        await RoutePrice.findOneAndUpdate(
+                            { from_location: finalFrom, to_location: finalTo },
+                            priceUpdate,
+                            { new: true }
+                        );
+                    } else {
+                        throw err;
+                    }
+                }
+            }
         }
 
         res.json(route);
